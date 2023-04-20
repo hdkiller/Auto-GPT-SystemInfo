@@ -74,7 +74,7 @@ class AutoGPTPluginSystemInfo(AbstractSingleton, metaclass=Singleton):
         os_info = self.get_system_info()
         if os_info:
             prompt.add_resource(
-                f"You are running {os_info}. ",
+                f"Shell commands executed on {os_info}",
             )
 
         return prompt
