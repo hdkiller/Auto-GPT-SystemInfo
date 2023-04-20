@@ -1,20 +1,20 @@
-# System Information plugin for Auto-GPT
+# System Information Plugin for Auto-GPT
 
 ## Overview
 
-This plugin provides an additional line to the prompt which supposed to be a hint for the AI to use shell commands which is probably supported on the current system.
+This plugin adds an extra line to the prompt, serving as a hint for the AI to use shell commands likely supported by the current system.
 
 **Example prompt**:
 
    - "Shell commands executed on Linux 64bit Debian GNU/Linux 11 (debian)"
 
-This helps the model to provide commands which is compatible with the current operation system and makes it able to use system specific package managers for example. 
+This helps the model provide commands compatible with the current operating system and enables it to use system-specific package managers, for example.
 
 ## Installation
 
-Download this repository as a .zip file and copy to ./plugins/ and rename it Auto-GPT-SystemInfo.zip
+Download this repository as a .zip file, copy it to ./plugins/, and rename it to Auto-GPT-SystemInfo.zip.
 
-You can run this command from your Auto-GPT directory to download:
+To download it directly from your Auto-GPT directory, you can run this command:
 
 ```
 curl -o ./plugins/Auto-GPT-SystemInfo.zip https://github.com/hdkiller/Auto-GPT-SystemInfo/archive/refs/heads/master.zip 
@@ -22,7 +22,4 @@ curl -o ./plugins/Auto-GPT-SystemInfo.zip https://github.com/hdkiller/Auto-GPT-S
 
 ## Compatibility
 
-The plugin supports Linux, MacOs and Windows. 
-
-
-
+The plugin supports Linux, macOS, and Windows.
