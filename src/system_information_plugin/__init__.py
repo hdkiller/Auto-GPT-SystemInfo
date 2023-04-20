@@ -1,23 +1,25 @@
 """This is a system information plugin for Auto-GPT."""
-import platform
-#from typing import TypeVar
-from typing import Any, Dict, List, Optional, Tuple, TypeVar, TypedDict
-
+from auto_gpt_plugin_template import AutoGPTPluginTemplate
 import distro
+import platform
+from typing import Any, Dict, List, Optional, Tuple, TypedDict, TypeVar
 
-from auto_gpt_plugin_template  import AutoGPTPluginTemplate
+
+
 # from abc import abstractmethod
 
 PromptGenerator = TypeVar("PromptGenerator")
+
 
 class Message(TypedDict):
     role: str
     content: str
 
+
 class SystemInformationPlugin(AutoGPTPluginTemplate):
     """
-    This is a system information plugin for Auto-GPT. It adds the system information to the prompt. 
-    It works on Linux, Windows and macOS.
+    This is a system information plugin for Auto-GPT which
+    adds the system information to the prompt.
     """
 
     def __init__(self):
@@ -197,7 +199,6 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
             str: The resulting response.
         """
         pass
-
 
     def get_system_info(self) -> str:
         """
