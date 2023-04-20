@@ -1,12 +1,7 @@
 """This is a system information plugin for Auto-GPT."""
 from auto_gpt_plugin_template import AutoGPTPluginTemplate
-import distro
-import platform
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, TypeVar
-
-
-
-# from abc import abstractmethod
+from .system_information import get_system_information
 
 PromptGenerator = TypeVar("PromptGenerator")
 
@@ -29,7 +24,15 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
         self._description = "This is system info plugin for Auto-GPT."
 
     def post_prompt(self, prompt: PromptGenerator) -> PromptGenerator:
-        os_info = self.get_system_info()
+        """This method is called just after the generate_prompt is called,
+        but actually before the prompt is generated.
+        Args:
+            prompt (PromptGenerator): The prompt generator.
+        Returns:
+            PromptGenerator: The prompt generator.
+        """
+
+        os_info = get_system_information()
         if os_info:
             prompt.add_resource(
                 f"Shell commands executed on {os_info}",
@@ -199,48 +202,3 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
             str: The resulting response.
         """
         pass
-
-    def get_system_info(self) -> str:
-        """
-        Gets system information.
-
-        Returns:
-            str: The system information.
-        """
-
-        # Get system architecture
-        arch = platform.architecture()[0]
-
-        # Get system distribution (works on Linux only)
-        if platform.system() == "Linux":
-            distro_name = distro.name()
-            distro_version = distro.version()
-            distro_id = distro.id()
-
-            distro_info = f"{distro_name} {distro_version} ({distro_id})"
-        else:
-            distro_info = None
-
-        # Get Windows version (works on Windows only)
-        if platform.system() == "Windows":
-            win_ver = platform.win32_ver()
-            win_version = f"{win_ver[0]} {win_ver[1]} {win_ver[4]}"
-        else:
-            win_version = None
-
-        # Get macOS version (works on macOS only)
-        if platform.system() == "Darwin":
-            mac_ver = platform.mac_ver()
-            mac_version = f"{mac_ver[0]} {mac_ver[2]}"
-        else:
-            mac_version = None
-
-        # Build the prompt
-        if distro_info:
-            os_info = f"Linux {arch} {distro_info}"
-        if win_version:
-            os_info = f"Windows {win_version}"
-        if mac_version:
-            os_info = f"macOS {mac_version}"
-
-        return os_info
