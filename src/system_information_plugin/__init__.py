@@ -1,11 +1,17 @@
 """This is a system information plugin for Auto-GPT."""
+import os
+from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, TypeVar
 
 from auto_gpt_plugin_template import AutoGPTPluginTemplate
+from dotenv import load_dotenv
 
 from .system_information import get_shell_name, get_system_information
 
 PromptGenerator = TypeVar("PromptGenerator")
+
+with open(str(Path(os.getcwd()) / ".env"), "r", encoding="utf-8") as fp:
+    load_dotenv(stream=fp)
 
 
 class Message(TypedDict):
@@ -25,6 +31,17 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
         self._version = "0.1.2"
         self._description = "This is system info plugin for Auto-GPT."
 
+        self.execute_local_commands = (
+            os.getenv("EXECUTE_LOCAL_COMMANDS", "False") == "True"
+        )
+
+        if not self.execute_local_commands:
+            print(
+                "WARNING:",
+                "SystemInformationPlugin: EXECUTE_LOCAL_COMMANDS is false. "
+                "System information will not be added to the context.",
+            )
+
     def post_prompt(self, prompt: PromptGenerator) -> PromptGenerator:
         """This method is called just after the generate_prompt is called,
         but actually before the prompt is generated.
@@ -34,17 +51,18 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
             PromptGenerator: The prompt generator.
         """
 
-        os_info = get_system_information()
-        shell_info = get_shell_name()
+        if self.execute_local_commands:
+            os_info = get_system_information()
+            shell_info = get_shell_name()
 
-        # Add the shell information to the prompt if it is not empty
-        if shell_info != "":
-            shell_info = f" in {shell_info}"
+            # Add the shell information to the prompt if it is not empty
+            if shell_info != "":
+                shell_info = f" in {shell_info}"
 
-        if os_info:
-            prompt.add_resource(
-                f"Shell commands executed on {os_info}{shell_info}",
-            )
+            if os_info:
+                prompt.add_resource(
+                    f"Shell commands executed on {os_info}{shell_info}",
+                )
 
         return prompt
 
