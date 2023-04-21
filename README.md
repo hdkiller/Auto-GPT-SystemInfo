@@ -7,7 +7,7 @@ By incorporating this plugin, you can ensure that the AI model provides more acc
 
 **Example Prompt Included in the Context:**
 
-   - "Shell commands executed on Linux 64bit Debian GNU/Linux 11 (debian)"
+   - "Shell commands executed on Linux 64bit Debian GNU/Linux 11 (debian) in zsh"
 
 This helps the model provide commands compatible with the current operating system, enabling it to use system-specific package managers and other utilities.
 

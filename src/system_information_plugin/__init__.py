@@ -1,7 +1,9 @@
 """This is a system information plugin for Auto-GPT."""
-from auto_gpt_plugin_template import AutoGPTPluginTemplate
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, TypeVar
-from .system_information import get_system_information
+
+from auto_gpt_plugin_template import AutoGPTPluginTemplate
+
+from .system_information import get_shell_name, get_system_information
 
 PromptGenerator = TypeVar("PromptGenerator")
 
@@ -20,7 +22,7 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
     def __init__(self):
         super().__init__()
         self._name = "Auto-GPT-Plugin-SystemInfo"
-        self._version = "0.1.0"
+        self._version = "0.1.2"
         self._description = "This is system info plugin for Auto-GPT."
 
     def post_prompt(self, prompt: PromptGenerator) -> PromptGenerator:
@@ -33,9 +35,15 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
         """
 
         os_info = get_system_information()
+        shell_info = get_shell_name()
+
+        # Add the shell information to the prompt if it is not empty
+        if shell_info != "":
+            shell_info = f" in {shell_info}"
+
         if os_info:
             prompt.add_resource(
-                f"Shell commands executed on {os_info}",
+                f"Shell commands executed on {os_info}{shell_info}",
             )
 
         return prompt

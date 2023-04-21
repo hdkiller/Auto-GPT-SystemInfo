@@ -1,8 +1,10 @@
 """Gets system information."""
 from __future__ import annotations
 
-import distro
+import os
 import platform
+
+import distro
 
 
 def get_system_information() -> str:
@@ -49,3 +51,31 @@ def get_system_information() -> str:
         os_info = f"macOS {mac_version}"
 
     return os_info
+
+
+def get_shell_name() -> str:
+    """Gets the shell name.
+
+    Returns:
+        str: The shell name.
+
+    Throws:
+        KeyError: If the shell name is not found.
+        AttributeError: If the shell name is not found.
+    """
+
+    try:
+        if platform.system() == "Windows":
+            shell = os.environ.get("ComSpec", "").split("\\")[-1]
+            if shell.lower() == "cmd.exe":
+                return "cmd"
+            elif shell.lower() == "powershell.exe":
+                return "powershell"
+        else:
+            shell = os.environ.get("SHELL", "").split("/")[-1]
+            if shell in ["bash", "zsh", "sh", "ksh", "csh", "fish", "dash"]:
+                return shell
+    except (KeyError, AttributeError) as e:
+        print(f"Error: {e}")
+
+    return ""
