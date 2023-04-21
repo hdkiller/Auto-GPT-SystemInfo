@@ -29,7 +29,7 @@ Invoke-WebRequest -Uri "https://github.com/hdkiller/Auto-GPT-SystemInfo/archive/
 
 ## Configuration
 
-This plugin is designed to enhance the capabilities of executing shell commands in Auto-GPT, which is only activated when the EXECUTE_LOCAL_COMMANDS=True setting is enabled in the .env file.
+This plugin is designed to enhance the capabilities of executing shell commands in Auto-GPT, which is only activated when the EXECUTE_LOCAL_COMMANDS=True setting is enabled in the .env file. If that environment variable is not set, the plugin will display a warning and will not inject the operating system details into the context to prevent encouraging the model from executing shell commands.
 
 ## Compatibility
 
