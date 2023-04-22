@@ -31,7 +31,7 @@ def get_system_information() -> str:
     # Get Windows version (works on Windows only)
     if platform.system() == "Windows":
         win_ver = platform.win32_ver()
-        win_version = f"{win_ver[0]} {win_ver[1]} {win_ver[4]}"
+        win_version = f"{win_ver[0]} {win_ver[1]} {win_ver[3]}"
     else:
         win_version = None
 
