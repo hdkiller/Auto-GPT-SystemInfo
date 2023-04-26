@@ -1,18 +1,12 @@
 """This is a system information plugin for Auto-GPT."""
 import os
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, TypedDict, TypeVar
 
 from auto_gpt_plugin_template import AutoGPTPluginTemplate
-from dotenv import load_dotenv
 
 from .system_information import get_shell_name, get_system_information
 
 PromptGenerator = TypeVar("PromptGenerator")
-
-with open(str(Path(os.getcwd()) / ".env"), "r", encoding="utf-8") as fp:
-    load_dotenv(stream=fp)
-
 
 class Message(TypedDict):
     role: str
