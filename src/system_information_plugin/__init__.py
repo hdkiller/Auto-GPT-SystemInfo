@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 from .system_information import get_shell_name, get_system_information
 
+
 PromptGenerator = TypeVar("PromptGenerator")
 
 with open(str(Path(os.getcwd()) / ".env"), "r", encoding="utf-8") as fp:
@@ -205,14 +206,14 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
         self, messages: Dict[Any, Any], model: str, temperature: float, max_tokens: int
     ) -> bool:
         """This method is called to check that the plugin can
-          handle the chat_completion method.
+            handle the chat_completion method.
         Args:
             messages (List[Message]): The messages.
             model (str): The model name.
             temperature (float): The temperature.
             max_tokens (int): The max tokens.
-          Returns:
-              bool: True if the plugin can handle the chat_completion method."""
+            Returns:
+                bool: True if the plugin can handle the chat_completion method."""
         return False
 
     def handle_chat_completion(
@@ -227,4 +228,65 @@ class SystemInformationPlugin(AutoGPTPluginTemplate):
         Returns:
             str: The resulting response.
         """
+        pass
+
+    def can_handle_report(self) -> bool:
+                """This method is called to check that the plugin can
+                handle the report method.
+
+                Returns:
+                    bool: True if the plugin can handle the report method."""
+                return False
+
+    def can_handle_text_embedding(
+        self, text: str
+    ) -> bool:
+        """This method is called to check that the plugin can
+            handle the text_embedding method.
+        Args:
+            text (str): The text to be convert to embedding.
+            Returns:
+                bool: True if the plugin can handle the text_embedding method."""
+        return False
+
+    def can_handle_user_input(self, user_input: str) -> bool:
+        """This method is called to check that the plugin can
+        handle the user_input method.
+
+        Args:
+            user_input (str): The user input.
+
+        Returns:
+            bool: True if the plugin can handle the user_input method."""
+        return False
+
+    def handle_text_embedding(
+        self, text: str
+    ) -> list:
+        """This method is called when the chat completion is done.
+        Args:
+            text (str): The text to be convert to embedding.
+        Returns:
+            list: The text embedding.
+        """
+        pass
+
+    def report(self, message: str) -> None:
+        """This method is called to report a message to the user.
+
+        Args:
+            message (str): The message to report.
+        """
+        pass
+
+    def user_input(self, user_input: str) -> str:
+        """This method is called to request user input to the user.
+
+        Args:
+            user_input (str): The question or prompt to ask the user.
+
+        Returns:
+            str: The user input.
+        """
+
         pass
